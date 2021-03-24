@@ -94,7 +94,7 @@ const typeDefs = gql`
     description: String
   }
 
-  type Reviews{
+  type Reviews {
     count: Float
     average: Float
     reviews: [Review]
@@ -141,13 +141,19 @@ const typeDefs = gql`
     loginUser(email: String!, password: String!): Access
     deleteUser(id: String!): String!
     undeleteUser(id: String!): String!
-    addReview(productId: String!, userId: String!, title: String!, score: Float!, description: String): Review!
-    updateReview(
-      id: String!, 
-      title: String!, 
-      score: Float!, 
+    addReview(
+      productId: String!
+      userId: String!
+      title: String!
+      score: Float!
       description: String
-      ): String
+    ): Review!
+    updateReview(
+      id: String!
+      title: String!
+      score: Float!
+      description: String
+    ): String
     deleteReview(id: String!): String
     logoutUser(id: String!): Logout
   }
@@ -162,6 +168,7 @@ const typeDefs = gql`
     productForCategory(name: String!): [Product!]!
     searchProducts(name: String!): [Product!]!
     cart(userId: String!): [Cart]!
+    allCarts: [Cart!]!
     finalproducts(productId: String!, modelId: String!): [FinalProduct!]!
     image(productId: String!): [Image]!
     deleted: [Product!]!
