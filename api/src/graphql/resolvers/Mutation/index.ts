@@ -31,4 +31,6 @@ export { default as updateCategory } from "./updateCategory";
 export { default as updateProduct } from "./updateProduct";
 export { default as updateReview } from "./updateReview";
 export { default as updateState } from "./updateState";
+
 export { default as updateUser } from "./updateUser";
+export { default as codeGit } from "./codeGit";

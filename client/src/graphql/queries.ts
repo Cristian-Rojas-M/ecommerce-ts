@@ -226,4 +226,11 @@ export const GET_DELETED_USERS = gql`
       nlsuscribe
     }
   }
-`;
+`
+export const AUTH_GIT=gql`
+query authGit{
+  authGit
+}
+`
+
+;

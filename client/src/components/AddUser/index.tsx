@@ -1,20 +1,31 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { StyledAddUser } from "./StyledAddUser";
-import { ADD_USER } from "../../graphql/mutations";
+import { ADD_USER, CODE_GIT } from "../../graphql/mutations";
 import { validateChange, check, form } from "../../helpers/validationUser";
-import { useHistory } from "react-router-dom"
+import { useHistory } from "react-router-dom";
+import { AUTH_GIT } from "../../graphql/queries";
 interface AddUserAttributes {
   className: String;
 }
 
 export default function AddUser({ className }: AddUserAttributes) {
   const history = useHistory();
-  const [
-    createUser,
-    { error: errorMutationUser },
-  ] = useMutation(ADD_USER);
+  const [createUser, { error: errorMutationUser }] = useMutation(ADD_USER);
+  let { data, loading, error } = useQuery(AUTH_GIT);
+  const [codeGit, { error: errorCodeGit }] = useMutation(CODE_GIT);
 
+  const querystring = window.location.search;
+  console.log(querystring);
+
+  const handleCode = async () => {
+    await codeGit({
+      variables: {
+        code: querystring,
+      },
+    });
+  };
+  handleCode();
 
   const [form, setForm] = useState<form>({
     firstName: "",
@@ -33,7 +44,15 @@ export default function AddUser({ className }: AddUserAttributes) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let { firstName, lastName, userName, isAdmin, email, password, nlsuscribe } = form;
+    let {
+      firstName,
+      lastName,
+      userName,
+      isAdmin,
+      email,
+      password,
+      nlsuscribe,
+    } = form;
     try {
       await createUser({
         variables: {
@@ -45,7 +64,7 @@ export default function AddUser({ className }: AddUserAttributes) {
           password,
           nlsuscribe: nlsuscribe && true,
         },
-      }).then(() => history.push("/login"))
+      }).then(() => history.push("/login"));
     } catch (err) {
       console.log(err);
       return;
@@ -71,7 +90,8 @@ export default function AddUser({ className }: AddUserAttributes) {
     <StyledAddUser>
       <form onSubmit={handleSubmit}>
         <div className="div_firstName">
-          <input className="register"
+          <input
+            className="register"
             type="text"
             name="firstName"
             onChange={handleChange}
@@ -81,7 +101,8 @@ export default function AddUser({ className }: AddUserAttributes) {
           <span className="span_firstName"></span>
         </div>
         <div className="div_lastName">
-          <input className="register"
+          <input
+            className="register"
             type="text"
             name="lastName"
             onChange={handleChange}
@@ -91,7 +112,8 @@ export default function AddUser({ className }: AddUserAttributes) {
           <span className="span_lastName"></span>
         </div>
         <div className="div_userName">
-          <input className="register"
+          <input
+            className="register"
             type="text"
             name="userName"
             onChange={handleChange}
@@ -101,7 +123,8 @@ export default function AddUser({ className }: AddUserAttributes) {
           <span className="span_userName"></span>
         </div>
         <div className="div_email">
-          <input className="register"
+          <input
+            className="register"
             type="email"
             name="email"
             onChange={handleChange}
@@ -111,7 +134,8 @@ export default function AddUser({ className }: AddUserAttributes) {
           <span className="span_email"></span>
         </div>
         <div className="div_password">
-          <input className="register"
+          <input
+            className="register"
             type="password"
             name="password"
             onChange={handleChange}
@@ -121,17 +145,20 @@ export default function AddUser({ className }: AddUserAttributes) {
           <span className="span_password"></span>
         </div>
         <div className="div_nlsuscribe">
-          <input
-            type="checkbox"
-            name="nlsuscribe"
-            onChange={handleChange}
-          />
+          <input type="checkbox" name="nlsuscribe" onChange={handleChange} />
           <label htmlFor="nlsuscribe">Recibir newsletter</label>
           <span className="span_nlsuscribe"></span>
         </div>
 
-        <input className="boton" type="submit" value="Registrarse" disabled={form.error} />
+        <input
+          className="boton"
+          type="submit"
+          value="Registrarse"
+          disabled={form.error}
+        />
       </form>
+
+      {data ? <a href={data.authGit}> git </a> : null}
     </StyledAddUser>
   );
 }

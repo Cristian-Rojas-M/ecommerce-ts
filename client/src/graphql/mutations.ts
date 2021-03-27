@@ -214,3 +214,9 @@ export const LOGOUT_USER = gql`
   }
 `;
 
+export const CODE_GIT=gql`
+mutation codeGit($code:String!){
+  
+}
+`
+
