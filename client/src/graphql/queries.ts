@@ -232,5 +232,9 @@ query authGit{
   authGit
 }
 `
-
+export const CODE_GIT=gql`
+query gitCode($code:String!){
+  gitCode(code:$code)
+}
+`
 ;

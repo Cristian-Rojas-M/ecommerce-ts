@@ -1,14 +1,16 @@
-const requestGithubToken = credentials =>
-  fetch('https://github.com/login/oauth/access_token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    },
-    body: JSON.stringify(credentials)
+const axios = require('axios');
+
+
+const requestGithubToken = (client_id,client_secret,code) =>
+  axios.post('https://github.com/login/oauth/access_token', {
+   client_id,client_secret,code
   })
-    .then(res => res.json())
+    .then(res => {
+      
+      return res
+    })
     .catch(error => {
+      console.log(error)
       throw new Error(JSON.stringify(error));
     });
 export default requestGithubToken;

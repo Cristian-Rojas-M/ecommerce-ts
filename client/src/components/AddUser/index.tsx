@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useMutation, useQuery, useLazyQuery } from "@apollo/client";
 import { StyledAddUser } from "./StyledAddUser";
-import { ADD_USER, CODE_GIT } from "../../graphql/mutations";
+import { ADD_USER } from "../../graphql/mutations";
 import { validateChange, check, form } from "../../helpers/validationUser";
 import { useHistory } from "react-router-dom";
-import { AUTH_GIT } from "../../graphql/queries";
+import { AUTH_GIT, CODE_GIT } from "../../graphql/queries";
 interface AddUserAttributes {
   className: String;
 }
@@ -12,20 +12,19 @@ interface AddUserAttributes {
 export default function AddUser({ className }: AddUserAttributes) {
   const history = useHistory();
   const [createUser, { error: errorMutationUser }] = useMutation(ADD_USER);
+  if (window.location.search) {
+    const querystring = window.location.search;
+    console.log(querystring);
+  }
   let { data, loading, error } = useQuery(AUTH_GIT);
-  const [codeGit, { error: errorCodeGit }] = useMutation(CODE_GIT);
-
-  const querystring = window.location.search;
-  console.log(querystring);
-
-  const handleCode = async () => {
-    await codeGit({
+  const { data: codeData, loading: loadingCode, error: errorCode } = useQuery(
+    CODE_GIT,
+    {
       variables: {
-        code: querystring,
+        code: window.location?.search,
       },
-    });
-  };
-  handleCode();
+    }
+  );
 
   const [form, setForm] = useState<form>({
     firstName: "",

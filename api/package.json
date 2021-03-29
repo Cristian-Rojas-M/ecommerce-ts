@@ -24,6 +24,7 @@
   "dependencies": {
     "apollo-server": "^2.21.1",
     "apollo-server-express": "^2.21.1",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",

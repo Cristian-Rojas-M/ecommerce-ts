@@ -179,7 +179,7 @@ const typeDefs = gql`
 		updateStock(productId:String!,modelId:String!, input:Int):String
 		updateUser(id: String!, atr: String!, input: String): String
 
-		codeGit(code:String!):String
+		
 		
 		}
 
@@ -208,6 +208,7 @@ const typeDefs = gql`
     	allStock:[FinalProduct!]!
 
 		authGit:String!
+		gitCode(code:String!):String!
 	}
 `;
 export default typeDefs;
