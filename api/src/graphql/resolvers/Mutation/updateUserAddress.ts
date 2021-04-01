@@ -6,20 +6,18 @@ interface userAddress {
   city: string, 
   street: string, 
   addressnumber: string, 
-  postcode: string, 
 } 
 
 
 const updateUserAddress = async (parent:any, args: userAddress )  => {
     
-  const {id, country, city, street, addressnumber, postcode} = args
+  const {id, country, city, street, addressnumber, } = args
 
     const update = await User.update({
       country,
       city,
       street,
       addressnumber,
-      postcode
     },{
         where:{
             id

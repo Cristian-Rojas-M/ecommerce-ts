@@ -97,11 +97,7 @@ export class User extends Model<UserAttributes> {
   })
   addressnumber: number;
 
-  @Column({
-    allowNull: true,
-    type: DataType.INTEGER,
-  })
-  postcode: number;
+ 
 
   @Column({
     allowNull: false,

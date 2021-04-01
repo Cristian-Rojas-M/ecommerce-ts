@@ -232,3 +232,22 @@ export const UPDATE_STATE = gql`
     }
   }
 `;
+export const UPDATE_ADDRESS = gql`
+  mutation updateUserAddress(
+    $id: String!
+    $country: String!
+    $city: String!
+    $street: String!
+    $addressnumber: Float!
+    
+  ) {
+    updateUserAddress(
+      id: $id
+      country: $country
+      city: $city
+      street: $street
+      addressnumber: $addressnumber
+      
+    )
+  }
+`;

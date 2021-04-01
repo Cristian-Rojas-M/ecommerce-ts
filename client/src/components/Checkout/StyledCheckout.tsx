@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { blanco, formWidth } from '../../containers/App/GlobalStyles'
+import styled from "styled-components";
+import { blanco, formWidth } from "../../containers/App/GlobalStyles";
 
 export const StyledChaeckout = styled.div`
   width: ${formWidth}vw;
@@ -16,11 +16,11 @@ export const StyledChaeckout = styled.div`
   position: relative;
   flex-direction: column;
   font-weight: 500;
-  
-  h2{
-      font-size: 1.5rem;
+
+  h2 {
+    font-size: 1.5rem;
   }
-  ul{
+  ul {
     width: 70%;
   }
   ul li {
@@ -30,24 +30,29 @@ export const StyledChaeckout = styled.div`
     align-items: center;
     margin: 2rem 0 2rem 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-    span{
+    span {
       width: 100%;
       display: flex;
       justify-content: center;
-        
     }
   }
-  .location{
-      display: flex;
-      flex-direction:column;
-      height: 20vh;
-      justify-content:space-around;
-      margin: 1.5rem;
-      align-items: center;
-      input{
-        margin: 0.5rem 0 0.5rem 0;
-      }
-  }  
+  .location {
+    display: flex;
+    flex-direction: column;
+    height: 20vh;
+    justify-content: space-around;
+    margin: 1.5rem;
+    align-items: center;
+    input {
+      margin: 0.5rem 0 0.5rem 0;
+    }
+    span {
+      font-size: 0.5rem;
+      color: red;
+      max-width: 45%;
+      text-align: center;
+    }
+  }
 
   @media (max-width: 858px) {
     width: 90vw;
@@ -57,5 +62,4 @@ export const StyledChaeckout = styled.div`
       }
     }
   }
-`
-; 
+`;

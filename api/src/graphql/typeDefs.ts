@@ -13,7 +13,6 @@ const typeDefs = gql`
     country: String
     addressnumber: Float
     street: String
-    postecode: Float
     nlsuscribe: Boolean
     isGmail: Boolean
     products: [Product]
@@ -169,7 +168,7 @@ const typeDefs = gql`
       country: String
       addressnumber: Int
       street: String
-      postcode: Int
+      
     ): User!
 
     deleteCategory(id: String!): Category
@@ -204,7 +203,7 @@ const typeDefs = gql`
       city: String,
       street: String,
       addressnumber: Float,
-      postcode: Float,
+      
       ): String
   }
 

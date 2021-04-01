@@ -1,13 +1,21 @@
-import React from 'react'
+import React, { useState } from "react";
 // import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { StyledChaeckout } from './StyledCheckout';
-import { useAuth } from '../../hooks/AuthProvider';
-import { GET_CART } from '../../graphql/queries';
-import { useQuery } from '@apollo/client';
-import Loader from '../Loader';
+import { StyledChaeckout } from "./StyledCheckout";
+import { useAuth } from "../../hooks/AuthProvider";
+import { GET_CART } from "../../graphql/queries";
+import { useMutation, useQuery } from "@apollo/client";
+import Loader from "../Loader";
+import { UPDATE_ADDRESS } from "../../graphql/mutations";
+import {
+  checkLocation,
+  form,
+  validateLocation,
+} from "../../helpers/validateLocacion";
 
-const stripePromise = loadStripe('pk_test_51IYWrFKvrKT0hMD3gSFxlJd8ljQvDJBYWVaI0Xtr1JxWYpliVfyIyQG4Um32fUMZS5JOj8JEyDchF5TcHmWlO4qk00TxDSLbDv');
+const stripePromise = loadStripe(
+  "pk_test_51IYWrFKvrKT0hMD3gSFxlJd8ljQvDJBYWVaI0Xtr1JxWYpliVfyIyQG4Um32fUMZS5JOj8JEyDchF5TcHmWlO4qk00TxDSLbDv"
+);
 
 export default function Checkout() {
   const { userId } = useAuth();
@@ -16,21 +24,54 @@ export default function Checkout() {
       userId: userId && userId,
     },
   });
-  // const {userId} = useAuth()
- 
+  const [updateAddress, { error: errorUpdate }] = useMutation(UPDATE_ADDRESS);
+  const [form, setForm] = useState<form>({
+    country: "",
+    city: "",
+    street: "",
+    addressnumber: 0,
+  });
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    let { country, city, street, addressnumber } = form;
+    try {
+      await updateAddress({
+        variables: {
+          country,
+          city,
+          street,
+          addressnumber,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      return;
+    }
+    setForm({
+      country: "",
+      city: "",
+      street: "",
+      addressnumber: null,
+    });
+  };
+  const handleChange = async (e: any) => {
+    const error = checkLocation(e, form);
+    console.log(error);
+  };
 
   const handleSubmit = async (event) => {
     // Get Stripe.js instance
-    event.preventDefault()
+    event.preventDefault();
     const stripe = await stripePromise;
     // Call your backend to create the Checkout Session
-    const response = await fetch("http://localhost:3001/checkout", { 
-      method: 'POST', 
-      body: JSON.stringify({userId}), // data can be `string` or {object}!
-      headers:{
-        'Content-Type': 'application/json'
+    const response = await fetch("http://localhost:3001/checkout", {
+      method: "POST",
+      body: JSON.stringify({ userId }), // data can be `string` or {object}!
+      headers: {
+        "Content-Type": "application/json",
       },
-      credentials: 'include'
+      credentials: "include",
     });
 
     const session = await response.json();
@@ -56,47 +97,65 @@ export default function Checkout() {
     <StyledChaeckout>
       <h2>Datos de la compra</h2>
       <ul>
-        {
-          cartProductsArray.map((i:any)=>{
-            count += i.finalproducts.product.price * i.quantity
-            return (
+        {cartProductsArray.map((i: any) => {
+          count += i.finalproducts.product.price * i.quantity;
+          return (
             <li key={i.finalproducts.id}>
-          
-           {i.quantity > 1 ? <span className="name">{i.finalproducts.product.name} x {i.quantity}</span> 
-           : 
-            <span className="name">{i.finalproducts.product.name}</span>}     
-            <span className="price">${i.finalproducts.product.price * i.quantity}</span>
-           </li>
-
-            )
-          })
-        }
+              {i.quantity > 1 ? (
+                <span className="name">
+                  {i.finalproducts.product.name} x {i.quantity}
+                </span>
+              ) : (
+                <span className="name">{i.finalproducts.product.name}</span>
+              )}
+              <span className="price">
+                ${i.finalproducts.product.price * i.quantity}
+              </span>
+            </li>
+          );
+        })}
         <li>
-        <span className="name"><strong>Total:</strong></span>
-        <span className="price"><strong>${count}</strong></span>
+          <span className="name">
+            <strong>Total:</strong>
+          </span>
+          <span className="price">
+            <strong>${count}</strong>
+          </span>
         </li>
       </ul>
-      <form className="location" onSubmit={handleSubmit}>
+      <form className="location" onSubmit={handleUpdate}>
         <label>Dirección de envio</label>
         <input
           type="text"
-          name="Ciudad"
-          placeholder="Ciudad"
+          name="country"
+          placeholder="Country"
+          onChange={handleChange}
         />
-
-        <input 
+        <span className="span_country"></span>
+        <input
           type="text"
-          name="Calle"
-          placeholder="Calle"
+          name="city"
+          placeholder="City"
+          onChange={handleChange}
         />
-
-        <input 
+        <span className="span_city"></span>
+        <input
           type="text"
-          name="CP"
-          placeholder="Código Postal"
+          name="street"
+          placeholder="Street"
+          onChange={handleChange}
         />
+        <span className="span_street"></span>
+        <input
+          type="text"
+          name="addressnumber"
+          placeholder="Addressnumber"
+          onChange={handleChange}
+        />
+        <span className="span_addressnumber"></span>
+
         <input className="boton" type="submit" value="Comprar" />
       </form>
-      </StyledChaeckout>
-  )
+    </StyledChaeckout>
+  );
 }
