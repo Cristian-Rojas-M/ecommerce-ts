@@ -10,7 +10,7 @@ import { UPDATE_ADDRESS } from "../../graphql/mutations";
 import {
   checkLocation,
   form,
-  validateLocation,
+  validateChange,
 } from "../../helpers/validateLocacion";
 
 const stripePromise = loadStripe(
@@ -35,9 +35,11 @@ export default function Checkout() {
   const handleUpdate = async (e) => {
     e.preventDefault();
     let { country, city, street, addressnumber } = form;
+
     try {
       await updateAddress({
         variables: {
+          id: userId,
           country,
           city,
           street,
@@ -57,7 +59,7 @@ export default function Checkout() {
   };
   const handleChange = async (e: any) => {
     const error = checkLocation(e, form);
-    console.log(error);
+    setForm(validateChange(e, form, error));
   };
 
   const handleSubmit = async (event) => {

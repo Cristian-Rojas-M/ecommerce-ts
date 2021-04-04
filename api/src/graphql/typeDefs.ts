@@ -11,7 +11,7 @@ const typeDefs = gql`
     password: String!
     city: String
     country: String
-    addressnumber: Float
+    addressnumber: String
     street: String
     nlsuscribe: Boolean
     isGmail: Boolean
@@ -202,7 +202,7 @@ const typeDefs = gql`
       country: String, 
       city: String,
       street: String,
-      addressnumber: Float,
+      addressnumber: String,
       
       ): String
   }

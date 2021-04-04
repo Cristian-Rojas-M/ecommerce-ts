@@ -95,7 +95,7 @@ export class User extends Model<UserAttributes> {
     allowNull: true,
     type: DataType.INTEGER,
   })
-  addressnumber: number;
+  addressnumber: string;
 
  
 

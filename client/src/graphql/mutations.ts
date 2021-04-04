@@ -238,7 +238,7 @@ export const UPDATE_ADDRESS = gql`
     $country: String!
     $city: String!
     $street: String!
-    $addressnumber: Float!
+    $addressnumber: String!
     
   ) {
     updateUserAddress(
