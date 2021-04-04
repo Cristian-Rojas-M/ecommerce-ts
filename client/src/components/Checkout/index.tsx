@@ -30,10 +30,10 @@ export default function Checkout() {
     city: "",
     street: "",
     addressnumber: 0,
+    error: true,
   });
 
-  const handleUpdate = async (e) => {
-    e.preventDefault();
+  const handleUpdate = async () => {
     let { country, city, street, addressnumber } = form;
 
     try {
@@ -50,12 +50,13 @@ export default function Checkout() {
       console.log(err);
       return;
     }
-    setForm({
-      country: "",
-      city: "",
-      street: "",
-      addressnumber: null,
-    });
+    // setForm({
+    //   country: "",
+    //   city: "",
+    //   street: "",
+    //   addressnumber: null,
+    //   error: true,
+    // });
   };
   const handleChange = async (e: any) => {
     const error = checkLocation(e, form);
@@ -65,6 +66,8 @@ export default function Checkout() {
   const handleSubmit = async (event) => {
     // Get Stripe.js instance
     event.preventDefault();
+    handleUpdate();
+
     const stripe = await stripePromise;
     // Call your backend to create the Checkout Session
     const response = await fetch("http://localhost:3001/checkout", {
@@ -125,7 +128,7 @@ export default function Checkout() {
           </span>
         </li>
       </ul>
-      <form className="location" onSubmit={handleUpdate}>
+      <form className="location" onSubmit={handleSubmit}>
         <label>Dirección de envio</label>
         <input
           type="text"
@@ -156,7 +159,12 @@ export default function Checkout() {
         />
         <span className="span_addressnumber"></span>
 
-        <input className="boton" type="submit" value="Comprar" />
+        <input
+          className="boton"
+          type="submit"
+          value="Comprar"
+          disabled={form.error}
+        />
       </form>
     </StyledChaeckout>
   );

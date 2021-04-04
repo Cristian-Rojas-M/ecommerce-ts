@@ -3,6 +3,7 @@ export interface form {
   city: string;
   street: string;
   addressnumber: number;
+  error:boolean;
   
 }
 
@@ -31,7 +32,7 @@ export const checkLocation = (e: any, form: form) => {
   }else if(span.className === 'span_country'){
 
     if(!validateLocation(e.target.value)){
-      span.innerHTML = "it must be a country";
+      span.innerHTML = "The name of the country must begin with a capital letter";
     }else{
       span.innerHTML = "";
     }
