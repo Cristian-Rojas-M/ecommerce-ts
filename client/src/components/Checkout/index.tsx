@@ -34,7 +34,7 @@ export default function Checkout() {
   });
 
   const handleUpdate = async () => {
-    let { country, city, street, addressnumber } = form;
+    let { country, city, street, addressnumber, error } = form;
 
     try {
       await updateAddress({
@@ -158,13 +158,9 @@ export default function Checkout() {
           onChange={handleChange}
         />
         <span className="span_addressnumber"></span>
-
-        <input
-          className="boton"
-          type="submit"
-          value="Comprar"
-          disabled={form.error}
-        />
+        {form.country && form.city && form.street && form.addressnumber ? (
+          <input className="boton" type="submit" value="Comprar" />
+        ) : null}
       </form>
     </StyledChaeckout>
   );
