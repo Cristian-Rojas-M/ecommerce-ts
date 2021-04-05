@@ -152,15 +152,24 @@ export default function Checkout() {
         />
         <span className="span_street"></span>
         <input
-          type="text"
+          type="number"
           name="addressnumber"
           placeholder="Addressnumber"
           onChange={handleChange}
         />
         <span className="span_addressnumber"></span>
-        {form.country && form.city && form.street && form.addressnumber ? (
-          <input className="boton" type="submit" value="Comprar" />
-        ) : null}
+
+        <input
+          className="boton"
+          type="text"
+          value="Comprar"
+          disabled={
+            !form.country ||
+            !form.city ||
+            !form.street ||
+            form.addressnumber < 1
+          }
+        />
       </form>
     </StyledChaeckout>
   );
