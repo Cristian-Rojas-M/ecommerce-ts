@@ -40,13 +40,13 @@ const Statistics = () => {
           <Bar
             data={{
               labels: [
-                "Lunes",
-                "Martes",
-                "Miércoles",
-                "Jueves",
-                "Viernes",
-                "Sábado",
-                "Domingo",
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
               ],
               datasets: [
                 {
