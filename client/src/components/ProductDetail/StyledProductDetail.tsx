@@ -162,9 +162,10 @@ export const StyledProductDetail = styled.div`
     background-color: rgba(100, 223, 223, 0.3);
 
     h3 {
-      grid-column: 2 / 3;
+      grid-column: 1 / 4;
       grid-row: 1 / 2;
       display: flex;
+      flex-wrap: nowrap;
       align-items: center;
       justify-content: center;
       color: ${violeta};
