@@ -17,6 +17,7 @@ export const StyledProductCard = styled.div`
     max-width: 20rem;
     max-height: 25rem;
     img.productImg {
+      margin-bottom: -5px;
       width:100%;
       height: 80%;
       max-width: 20rem;
