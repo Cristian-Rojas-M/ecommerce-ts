@@ -21,12 +21,11 @@ export default function Slider() {
             <img src="https://user-images.githubusercontent.com/74660801/113934044-93f4ae80-97f5-11eb-9769-eb7987e1aa0c.jpg"  alt='slider2' />
             </div>
         </NavLink>
-        
+        <NavLink to="/product/3">
         <div>
-          <NavLink to="/product/3">
             <img src="https://user-images.githubusercontent.com/74660801/113934025-8f2ffa80-97f5-11eb-9e5a-d9bf3c39b9ea.jpg" alt='slider3'/>
-          </NavLink>
         </div>
+        </NavLink>
 
       </Carousel>
 

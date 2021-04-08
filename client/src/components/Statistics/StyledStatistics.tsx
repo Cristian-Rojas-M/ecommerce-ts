@@ -15,8 +15,7 @@ export const StyledStatistics = styled.div`
     background-color: ${blanco}; /* ;ex-direction: column; */
   }
 
-  .barContainer,
-  .donutContainer {
+  .containerStatistics {
     width: 45vw;
     display: flex;
     flex-direction: column;
@@ -43,8 +42,7 @@ export const StyledStatistics = styled.div`
       align-items: center;
       margin: 2rem auto 0;
 
-      .donutContainer,
-      .barContainer {
+      .containerStatistics {
         width: 90%;
         margin: 2rem 0 0;
 
