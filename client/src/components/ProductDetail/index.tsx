@@ -423,7 +423,7 @@ export default function ProductDetail({ match }: any) {
           <h3>Related products</h3>
           <div className="photo">
             <ul>
-              {similProducts?.productForCategory?.map((item, i) =>
+              {similProducts?.productForCategory?.slice(0,3).map((item, i) =>
                 item.id === id ? null : (
                   <li key={i}>
                     <Link
