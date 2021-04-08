@@ -30,7 +30,7 @@ export const StyledStatistics = styled.div`
     text-align: center;
     text-transform: capitalize;
     padding: 1rem 1.5rem;
-    width: 50%;
+    width: 100%;
     border-radius: 15px;
     color: ${blanco};
     background-color: ${violeta};
