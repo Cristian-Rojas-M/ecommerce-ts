@@ -239,9 +239,7 @@ export const StyledProductDetail = styled.div`
     .fondoVioleta {
       display: none;
     }
-
-
-
+    
     .imagenes {
       padding-left: 0;
       grid-column: 1 / 2;

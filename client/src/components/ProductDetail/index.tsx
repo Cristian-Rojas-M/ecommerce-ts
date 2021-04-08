@@ -19,6 +19,7 @@ import { ADD_TO_CART, ADD_TO_WISHLIST, DELETE_FROM_WISHLIST } from "../../graphq
 import { useAuth } from "../../hooks/AuthProvider";
 import Reviews from "../../containers/Reviews";
 import Swal from "sweetalert2";
+import ProductsRelated from "../ProductsRelated";
 // import fav from "./heart/fav.png"
 
 
@@ -420,32 +421,7 @@ export default function ProductDetail({ match }: any) {
           )}
         </div>
         <div className="related">
-          <h3>Related products</h3>
-          <div className="photo">
-            <ul>
-              {similProducts?.productForCategory?.map((item, i) =>
-                item.id === id ? null : (
-                  <li key={i}>
-                    <Link
-                      to={`/product/${item.id || 1}`}
-                      key={item.id}
-                      onClick={() => window.scroll(0, 0)}
-                    >
-                      <img
-                        src={item.muestraimg || fotosZapa.photo}
-                        alt="name"
-                        className="productImg"
-                      />
-                      <div className="similData">
-                        <h5>{item.name}</h5>
-                        <h5>${item.price}</h5>
-                      </div>
-                    </Link>
-                  </li>
-                )
-              )}
-            </ul>
-          </div>
+          <ProductsRelated products={similProducts?.productForCategory?.filter(item => item.id !== id).slice(0,3)} title="Related products"></ProductsRelated>
         </div>
       </div>
     </StyledProductDetail>
