@@ -4,17 +4,40 @@ import { Sequelize } from "sequelize-typescript";
 
 import models from "./models";
 
-const sequelize = new Sequelize(
-  `postgres://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}`,
-  {
-    dialectOptions: {
-      charset: "utf8",
-      multipleStatements: true,
-    },
-    logging: false,
-    models,
-  }
-);
+const sequelize =
+    process.env.NODE_ENV === "production" 
+        ? new Sequelize(`${process.env.DATABASE_URL}`,{
+            dialect: "postgres",
+            logging:false,
+            models: models,
+              pool: {
+                  max: 3,
+                  min: 1,
+                  idle: 10000,
+              },
+              dialectOptions: {
+                  ssl: {
+                      rejectUnauthorized: false,
+                  },
+                  keepAlive: true,
+              }
+          })
+        : new Sequelize(`${process.env.DATABASE_URL}`,{
+            dialect: "postgres",
+            logging:false,
+            models: models,
+              pool: {
+                  max: 3,
+                  min: 1,
+                  idle: 10000,
+              },
+              dialectOptions: {
+                  ssl: {
+                      rejectUnauthorized: false,
+                  },
+                  keepAlive: true,
+              }
+          })
 
 sequelize.sync({ force: false });
 
